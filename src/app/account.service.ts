@@ -1,3 +1,11 @@
+// injectable
+import { Injectable } from "@angular/core";
+
+// other service
+import { LoggingService } from "./logging.service";
+
+@Injectable()
+
 export class AccountService {
 
     accounts = [
@@ -15,11 +23,17 @@ export class AccountService {
         }
       ];
 
+      constructor(private logging: LoggingService) {
+
+      }
+
       onAccountAdded(name: string, status: string) {
         this.accounts.push({name: name, status: status});
+        this.logging.changeStatus(status)
       }
     
       onStatusChanged(id: number, newStatus: string) {
         this.accounts[id].status = newStatus;
+        this.logging.changeStatus(newStatus)
       }
 } 
