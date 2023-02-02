@@ -1,6 +1,6 @@
 # Serviços em Angular!
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.0.
+<img src="./src/assets/angularServices.png"/>
 
 <p align="center">
      Sumário
@@ -15,6 +15,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
   </p>
 </p>
 
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.0.
 ## Sobre 
 <p>Os serviços podem ser uma forma de centralizar uma lógica, ou o armazenamento de dados e também de implementar comunicação entre componentes. Ou seja, quando você tem um código duplicado, que ocorre em diferentes lugares de uma aplicação Angular, um serviço pode ajudar terceirizando e centralizando a execução desse código.</p>
 
