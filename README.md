@@ -76,7 +76,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
     bootstrap: [AppComponent]
     })
 ```
-<p>Dessa maneira, a instancia da classe de um serviço fica disponível para toda aplicação. Nos casos em que um serviço, irá ser utilizado apenas em alguns componentes e não em toda a aplicação, a injeção pode ser feita no componente pai dos componentes que precisarão da instancia do serviço.</p>
+<p>Dessa maneira, a instancia da classe de um serviço fica disponível para toda aplicação, ou seja, todos os componentes poderão utilizar uma única instância desses serviços. Nos casos em que um serviço, irá ser utilizado apenas em alguns componentes e não em toda a aplicação, a injeção pode ser feita no componente pai dos componentes que precisarão da instancia do serviço.</p>
 
 ```javascript
     @Component({
