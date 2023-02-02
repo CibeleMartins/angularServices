@@ -1,7 +1,8 @@
 # Serviços em Angular!
 
+<img src="./src/assets/angularServices.png"/>
+
 <p align="center">
-    <img src="./src/assets/angularServices.png" alt="Logo" width="400"/>
      Sumário
       <p align="center">
   <a href="#sobre"> Sobre </a> |
