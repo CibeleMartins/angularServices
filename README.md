@@ -59,7 +59,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
     } 
 ```
 
-<p> Para isso, o Angular tem uma ótima ferramenta que dá acesso aos serviços sem precisar instanciar a classe manualmente, o injetor de dependencias. A injetor de dependencias funciona de maneira hierárquica, ou seja, de cima para baixo. O nível mais alto em que um serviço pode ser injetado é no app.module.ts</p>
+<p> Para isso, o Angular tem uma ótima ferramenta que dá acesso aos serviços sem precisar instanciar a classe manualmente do referido serviço nos componentes, o injetor de dependencias. Uma dependência é algo que uma classe depende, por exemplo, nessa aplicação o componente de nova conta depende de um método do serviço de conta. O injetor de dependências Angular injeta a classe do serviço automaticamente em um componente e, além disso, funciona de maneira hierárquica, ou seja, de cima para baixo. O nível mais alto em que um serviço pode ser injetado é no app.module.ts</p>
 
 ```javascript
     @NgModule({
