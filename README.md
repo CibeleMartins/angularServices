@@ -72,7 +72,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
         BrowserModule,
         FormsModule,
     ],
-    providers: [AccountService, LoggingService], <--------
+    providers: [AccountService, LoggingService], <-------- injeta o serviço no nível mais alto
     bootstrap: [AppComponent]
     })
 ```
@@ -83,7 +83,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
         selector: 'app-account',
         templateUrl: './account.component.html',
         styleUrls: ['./account.component.css'],
-        providers: [LoggingService], <---------
+        providers: [LoggingService], <--------- injeta o serviço no nível de um único componente/ de seus componentes filhos
     })
 ```
 
