@@ -9,6 +9,42 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 <p>Para criar um serviço é necessário criar uma classe c/ a extensão '.service.ts'. Dentro desta classe você pode construir o seu código. Os serviços em Angular, podem e devem ser usados nos componentes, mas não é uma boa prática instanciar a classe do serviço manualmente sempre que for utilizá-lo.</p>
 
+```javascript
+    export class AccountService {
+
+        accounts = [
+            {
+            name: 'Master Account',
+            status: 'active'
+            },
+            {
+            name: 'Testaccount',
+            status: 'inactive'
+            },
+            {
+            name: 'Hidden Account',
+            status: 'unknown'
+            }
+        ];
+
+        constructor(private logging: LoggingService) {
+
+        }
+
+        updateStatus = new EventEmitter<string>();
+
+        onAccountAdded(name: string, status: string) {
+            this.accounts.push({name: name, status: status});
+            this.logging.changeStatus(status)
+        }
+        
+        onStatusChanged(id: number, newStatus: string) {
+            this.accounts[id].status = newStatus;
+            this.logging.changeStatus(newStatus)
+        }
+    } 
+```
+
 <p> Para isso, o Angular tem uma ótima ferramenta que dá acesso aos serviços sem precisar instanciar a classe manualmente, o injetor de dependencias. A injetor de dependencias funciona de maneira hierárquica, ou seja, de cima para baixo. O nível mais alto em que um serviço pode ser injetado é no app.module.ts</p>
 
 ```javascript
