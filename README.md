@@ -41,9 +41,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
             }
         ];
 
-        constructor(private logging: LoggingService) {
+        // constructor(private logging: LoggingService) {
 
-        }
+        // }
 
         updateStatus = new EventEmitter<string>();
 
@@ -89,13 +89,15 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 <h3>Observação:</h3>
 <p> 1 - No exemplo acima, o componente './account.component.html' não é pai de nenhum outro componente, mas a nível de demonstração, a injeção do serviço deveria ocorrer dessa maneira</p>
-<p> 2 - Os serviços não se propagam, eles apenas descem na árvore de componentes. o nível mais baixo, portanto, é um componente único, sem componentes filhos.</p>
+<p> 2 - Os serviços não se propagam, eles apenas descem na árvore de componentes. É uma única instancia que desce na árvore entre os componentes. O nível mais baixo, portanto, é um componente único que depende de um serviço, sem componentes filhos.</p>
 
-<p>Feito isso, os componentes que estiverem abaixo do componente pai que recebeu a injeção do serviço, poderão utilizar e executar tudo que foi construído dentro da classe do serviço. Mas para isso é preciso injetar o serviço na função contrutora da classe do componente:</p>
+<p>Feito isso, os componentes que estiverem abaixo do componente 'app-account' que recebeu a injeção do serviço, poderão utilizar e executar tudo que foi construído dentro da classe do serviço [LoggingService]. Mas para isso é preciso informar ao Angular que precisamos da instancia do serviço em um determinado componente:</p>
 
 ```javascript
     constructor(private logging: LoggingService, private accountService: AccountService) {
 
     }
 ```
+
+<p>Dessa maneira, quando o Angular constrói o componente, ele já cria uma instancia do serviço para ele.</p>
 
