@@ -1,10 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+// import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 
 import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 
 import { AppComponent } from './app.component';
@@ -17,6 +18,7 @@ import { LoggingService } from './logging.service';
 import { SnippetsComponent } from './components/snippets/snippets.component';
 import { SnippetComponent } from './components/snippet/snippet.component';
 import { NewSnippetComponent } from './components/new-snippet/new-snippet.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -29,9 +31,11 @@ import { NewSnippetComponent } from './components/new-snippet/new-snippet.compon
   ],
   imports: [
     BrowserModule,
-    FormsModule,
+    // FormsModule,
     AppRoutingModule,
-    MatCardModule
+    MatCardModule,
+    MatFormFieldModule,
+    ReactiveFormsModule
    
   ],
   providers: [AccountService, LoggingService],

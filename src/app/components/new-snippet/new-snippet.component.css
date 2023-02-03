@@ -1,0 +1,9 @@
+textarea {
+    width: 30%;
+    height: 6vw;
+    border: none;
+    outline: none;
+    border-radius: 15px;
+    padding: 20px;
+    cursor: pointer;
+}
