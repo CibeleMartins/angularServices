@@ -41,20 +41,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
             }
         ];
 
-        // constructor(private logging: LoggingService) {
-
-        // }
-
-        updateStatus = new EventEmitter<string>();
-
         onAccountAdded(name: string, status: string) {
             this.accounts.push({name: name, status: status});
-            this.logging.changeStatus(status)
         }
         
         onStatusChanged(id: number, newStatus: string) {
             this.accounts[id].status = newStatus;
-            this.logging.changeStatus(newStatus)
         }
     } 
 ```
@@ -101,3 +93,186 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 <p>Dessa maneira, quando o Angular constrói o componente, ele já cria uma instancia do serviço para ele.</p>
 
+## Injetando serviços em serviços
+
+<p>Para injetar um serviço em outro serviço, ou seja, utilizar um método ou qualquer outra parte de um serviço X em um serviço Y, é necessário que ambos estejam injetados no nível mais alto da aplicação, como mencionado anteriormente.</p>
+
+<p>Primeiro, é necessário importar o serviço Y no serviço X e, dizer ao Angular que precisa da instância do serviço Y no serviço X:</p>
+
+```javascript
+// other service
+import { LoggingService } from "./logging.service"; <------- Serviço Y
+
+export class AccountService { <------ Serviço X
+
+    accounts = [
+        {
+          name: 'Master Account',
+          status: 'active'
+        },
+        {
+          name: 'Testaccount',
+          status: 'inactive'
+        },
+        {
+          name: 'Hidden Account',
+          status: 'unknown'
+        }
+      ];
+
+      constructor(private logging: LoggingService) { <----- Diz ao Angular que precisa da instância do serviço Y no serviço X
+
+      }
+
+      onAccountAdded(name: string, status: string) {
+        this.accounts.push({name: name, status: status});
+        this.logging.changeStatus(status)
+      }
+    
+      onStatusChanged(id: number, newStatus: string) {
+        this.accounts[id].status = newStatus;
+        this.logging.changeStatus(newStatus)
+      }
+} 
+```
+<p>No entanto, se esse código for utilizado dessa maneira, Angular retornará um erro. Isso ocorrerá, porque quando um serviço é injetado em algo, este algo precisa ter alguns metadados anexados à ele. Um componente em Angular, por exemplo, tem os seus metadados no '@Component'. Mas um serviço não tem um metadado, mas quando recebe a injeção de outro serviço ele precisa disso, de metadados específicos, para isso o Angular fornece o '@Injectable()'.</p>
+
+```javascript
+// other service
+import { LoggingService } from "./logging.service";
+
+@Injectable() <-------- Isso diz ao Angular que algo pode ser injetado aqui no serviço X
+
+export class AccountService {
+
+    accounts = [
+        {
+          name: 'Master Account',
+          status: 'active'
+        },
+        {
+          name: 'Testaccount',
+          status: 'inactive'
+        },
+        {
+          name: 'Hidden Account',
+          status: 'unknown'
+        }
+      ];
+
+      constructor(private logging: LoggingService) {
+
+      }
+
+      onAccountAdded(name: string, status: string) {
+        this.accounts.push({name: name, status: status});
+        this.logging.changeStatus(status) <----- métodos do serviço Y sendo utilizado na execução de um método do serviço X
+      }
+    
+      onStatusChanged(id: number, newStatus: string) {
+        this.accounts[id].status = newStatus;
+        this.logging.changeStatus(newStatus) <----- métodos do serviço Y sendo utilizado na execução de um método do serviço X
+      }
+} 
+```
+
+<p> O @Injectable() sempre deve ser adicionado ao serviço no qual vc quer injetar algo, e não no serviço a ser injetado. Mas, em algumas versões do Angular é recomendado utilizá-lo nos dois serviços.</p>
+
+## Utilizando serviços para comunicação entre componentes
+
+<p>Para realizar a comunicação entre componentes utilizando um serviço, você pode por xemplo, criar um EventEmitter em seu serviço, e emitir o tipo que você precisa acessar em outros componentes:</p>
+
+```javascript
+
+// injectable
+import { Injectable, EventEmitter } from "@angular/core";
+
+// other service
+import { LoggingService } from "./logging.service";
+
+@Injectable()
+
+export class AccountService {
+
+    accounts = [
+        {
+          name: 'Master Account',
+          status: 'active'
+        },
+        {
+          name: 'Testaccount',
+          status: 'inactive'
+        },
+        {
+          name: 'Hidden Account',
+          status: 'unknown'
+        }
+      ];
+
+      constructor(private logging: LoggingService) {
+
+      }
+
+      updateStatus = new EventEmitter<string>(); <----- Evento que emite uma string
+
+      onAccountAdded(name: string, status: string) {
+        this.accounts.push({name: name, status: status});
+        this.logging.changeStatus(status)
+      }
+    
+      onStatusChanged(id: number, newStatus: string) {
+        this.accounts[id].status = newStatus;
+        this.logging.changeStatus(newStatus)
+      }
+} 
+```
+
+<p>Após isso, basta acionar a emissão desse evento em algum componente:</p>
+
+```javascript
+    export class AccountComponent {
+        @Input() account: {name: string, status: string};
+        @Input() id: number;
+
+        constructor(private logging: LoggingService, private accountService: AccountService) {
+
+        }
+
+        onSetTo(status: string) {
+            this.accountService.onStatusChanged(this.id, status)
+            // this.logging.changeStatus(status)
+            this.accountService.updateStatus.emit(status)
+        }
+    
+    }
+```
+
+<p>E assinar/inscrever c/ o método subscribe() o que está sendo emitido, no componente que você deseja receber o dado/informação que foi emitido:<p>
+
+```javascript
+    export class NewAccountComponent {
+
+        constructor (private logging: LoggingService, private accountService: AccountService) {
+
+            this.accountService.updateStatus.subscribe(
+            (status: string)=> alert("New status: " + status)
+            );
+        }
+    } 
+```
+
+<p>Nos exemplos acima, no componente 'account', ao clicar em um dos botões que setam o estado da conta criada, o status dessa conta é emitido e no componente responsável por criar novas contas 'new-account', é recebido/assinado/ o status e acionado um alert.</p>
+
+## Uma forma diferente de injetar serviços
+
+<p> Para fornecer serviços em toda a aplicação de maneira mais eficiente, pensando em cenários em que os serviços forem utilizados em aplicações maiores, em vez de adicionar uma classe de serviço ao providers[] array em AppModule, você pode definir a seguinte configuração em @Injectable():
+
+```javascript
+    @Injectable({providedIn: 'root'})
+    export class MyService { ... }
+```
+
+<p>O uso desta sintaxe é totalmente opcional, a sintaxe tradicional (usando providers[]) também funcionará. Mas essa, oferece uma vantagem: os serviços podem ser carregados lentamente pelo Angular (nos bastidores) e o código redundante pode ser removido automaticamente. Isso pode levar a um melhor desempenho e velocidade de carregamento.</p>
+
+## Conclusão
+<p>Certifique-se de utilizar apenas uma quantidade necessária de instâncias de serviços, sempre que for injetar serviços em serviços certifique-se de fornecer os serviços no nível mais alto da aplicação e de utilizar o '@Injectable()'.</p>
