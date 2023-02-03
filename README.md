@@ -5,9 +5,13 @@
 <p align="center">
      Sumário
       <p align="center">
-  <a href="#sobre"> Sobre </a> |
-  <a href="#como-criar-um-serviço"> Como criar um serviço? </a> |
-  <a href="#observação"> Observação </a>      
+        <a href="#sobre"> Sobre </a> |
+        <a href="#como-criar-um-serviço"> Como criar um serviço? </a> |
+        <a href="#observação"> Observação </a> |
+        <a href="#injetando-serviços-em-serviços"> Injetando serviços em serviços </a> |
+        <a href="#utilizando-serviços-para-comunicação-entre-componentes"> Utilizando serviços para comunicação entre componentes </a> |
+        <a href="#uma-forma-diferente-de-injetar-serviços"> Uma forma diferente de injetar serviços </a> |
+        <a href="#conclusão"> Conclusão </a>
        <br />
     <br />
     <h1 align="center">
@@ -276,3 +280,5 @@ export class AccountService {
 
 ## Conclusão
 <p>Certifique-se de utilizar apenas uma quantidade necessária de instâncias de serviços, sempre que for injetar serviços em serviços certifique-se de fornecer os serviços no nível mais alto da aplicação e de utilizar o '@Injectable()'.</p>
+
+Sinta-se a vontade para explorar todo seu conhecimento utilizando este projeto, qualquer dúvida ou sugestão me procure no <a href='www.linkedin.com/in/cibelemartinssss'>Linkedin</a>.
