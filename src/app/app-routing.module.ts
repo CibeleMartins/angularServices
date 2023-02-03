@@ -1,12 +1,12 @@
 import { RouterModule, Routes } from "@angular/router";
 import { NgModule } from "@angular/core";
 
-import { SnippetComponent } from "./components/snippet/snippet.component";
+import { SnippetsComponent } from "./components/snippets/snippets.component";
 
 const routes: Routes = [];
 
 const RoutesApp: Routes = [
-  { path:'', component: SnippetComponent },
+  { path:'', component: SnippetsComponent },
 
 ];
 @NgModule({
