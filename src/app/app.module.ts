@@ -2,6 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { AppRoutingModule } from './app-routing.module';
+
+import {MatCardModule} from '@angular/material/card';
+
 
 import { AppComponent } from './app.component';
 import { AccountComponent } from './account/account.component';
@@ -25,7 +29,10 @@ import { NewSnippetComponent } from './components/new-snippet/new-snippet.compon
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule,
+    MatCardModule
+   
   ],
   providers: [AccountService, LoggingService],
   bootstrap: [AppComponent]
