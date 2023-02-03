@@ -227,21 +227,21 @@ export class AccountService {
 } 
 ```
 
-<p>Após isso, basta acionar a emissão desse evento em algum componente:</p>
+<p>Após isso, basta acionar a emissão desse evento em algum componente através da instância do serviço:</p>
 
 ```javascript
     export class AccountComponent {
         @Input() account: {name: string, status: string};
         @Input() id: number;
 
-        constructor(private logging: LoggingService, private accountService: AccountService) {
+        constructor(private logging: LoggingService, private accountService: AccountService) { <------ diz ao Angular quais instâncias de serviço que este componente precisa
 
         }
 
         onSetTo(status: string) {
             this.accountService.onStatusChanged(this.id, status)
             // this.logging.changeStatus(status)
-            this.accountService.updateStatus.emit(status)
+            this.accountService.updateStatus.emit(status) <------ aciona e emissão do evento do serviço
         }
     
     }
@@ -255,7 +255,7 @@ export class AccountService {
         constructor (private logging: LoggingService, private accountService: AccountService) {
 
             this.accountService.updateStatus.subscribe(
-            (status: string)=> alert("New status: " + status)
+            (status: string)=> alert("New status: " + status) <------- 
             );
         }
     } 
@@ -265,7 +265,7 @@ export class AccountService {
 
 ## Uma forma diferente de injetar serviços
 
-<p> Para fornecer serviços em toda a aplicação de maneira mais eficiente, pensando em cenários em que os serviços forem utilizados em aplicações maiores, em vez de adicionar uma classe de serviço ao providers[] array em AppModule, você pode definir a seguinte configuração em @Injectable():
+<p> Para fornecer serviços em toda a aplicação de maneira mais eficiente, pensando em cenários em que os serviços forem utilizados em aplicações maiores, ao invés de adicionar uma classe de serviço ao providers[] array em AppModule, você pode definir a seguinte configuração em @Injectable():
 
 ```javascript
     @Injectable({providedIn: 'root'})
