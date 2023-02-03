@@ -10,12 +10,18 @@ import { NewAccountComponent } from './new-account/new-account.component';
 // servic es
 import { AccountService } from './account.service';
 import { LoggingService } from './logging.service';
+import { SnippetsComponent } from './components/snippets/snippets.component';
+import { SnippetComponent } from './components/snippet/snippet.component';
+import { NewSnippetComponent } from './components/new-snippet/new-snippet.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AccountComponent,
-    NewAccountComponent
+    NewAccountComponent,
+    SnippetsComponent,
+    SnippetComponent,
+    NewSnippetComponent
   ],
   imports: [
     BrowserModule,
